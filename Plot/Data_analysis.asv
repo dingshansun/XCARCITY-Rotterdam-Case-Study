@@ -1,0 +1,43 @@
+clear
+load('New_folder_2D/Pareto_2D_before.mat')
+Obj_before=Obj;
+Dec_before=Dec;
+load('New_folder_2D/Pareto_2D_after.mat')
+Obj_after=Obj;
+Dec_after=Dec;
+%% The min TTC of before intervention
+% [~,min_TTC_before_index]=min(Obj_before(:,1));
+% % min_TTC_before_index=74;
+% solution=Dec_before(min_TTC_before_index,:);
+% fprintf("The detailed flow and cost of before-intervention is: \n");
+% output_before = ALSUN_Model_Single_before(solution);
+% fprintf("The detailed flow and cost of after-intervention is: \n");
+% output_after = ALSUN_Model_Single_after(solution);
+
+%% The results of before-min-TTC and after-min-TTC
+[~,min_TTC_before_index]=min(Obj_before(:,1));
+[~,min_TTC_after_index]=min(Obj_after(:,1));
+min_TTC_before_solution_B=Dec_before(min_TTC_before_index,:);
+min_TTC_after_solution_A=Dec_after(min_TTC_after_index,:);
+fprintf("The detailed flow and cost of solution B is: \n");
+output_B = ALSUN_Model_Single_before(min_TTC_before_solution_B);
+fprintf("The detailed flow and cost of solution B on after-intervention is: \n");
+output_B_A = ALSUN_Model_Single_after(min_TTC_before_solution_B);
+fprintf("The detailed flow and cost of solution A is: \n");
+output_A = ALSUN_Model_Single_after(min_TTC_after_solution_A);
+fprintf("Total is: \n");
+
+%% Show the detailed flow and cost information
+
+%% Show the relative shift of Scenario-Before optimial solutions
+% num=150;
+% Objective_before=nan(num,2);
+% Objective_after=nan(num,3);
+% 
+% % idx = randperm(150, num);
+% 
+% parfor i=1:num
+%     decision=Dec_before(i,:);
+%     Objective_before(i,:)=Obj_before(i,:);  % two dimension
+%     Objective_after(i,:)=ALSUN_Model_Single_after(decision); % three dimension
+% end
